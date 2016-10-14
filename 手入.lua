@@ -1,3 +1,5 @@
+--#coding=utf8
+
 --[[
 刀_模块化脚本：手入 v0.1 by 群内@黒田くん
 基于手入脚本v1.3 by 论坛@sakura_candy，群内@肝力不足
@@ -20,13 +22,13 @@ function EnterBed(n)
 	if Bed_IsEmpty(n) then
 		msg = " %d 号手入室空闲"
         Win.Print(msg:format(n))
-	
+
 		repeat
 			y = 136+(n-1)*121
 			Base.ClickRectEx(451,y,600,80)
 			Base.Sleep(1000)
 		until InBed_isColorAll()
-		
+
 		Win.Print("进入手入室")
 		return true
 	else
@@ -85,7 +87,7 @@ function EnterHome()
 		Base.ClickRectEx(900,65,50,10)  --初始化回本丸
 		Base.Sleep(1000,true)  --等待1秒
 	until Home_IsColorAll()
-	
+
 end
 
 function AutoHealMain(in_bed_count)
