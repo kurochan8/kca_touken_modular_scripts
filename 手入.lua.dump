@@ -1,24 +1,24 @@
 --[[
-µ¶_Ä£¿é»¯½Å±¾ v0.1 by ÈºÄÚ@ü\Ìï¤¯¤ó
-ÊÖÈë: ²¿·Ö»ùÓÚÊÖÈë½Å±¾v1.3 by ÂÛÌ³@sakura_candy£¬ÈºÄÚ@¸ÎÁ¦²»×ã
+åˆ€_æ¨¡å—åŒ–è„šæœ¬ v0.1 by ç¾¤å†…@é»’ç”°ãã‚“
+æ‰‹å…¥: éƒ¨åˆ†åŸºäºæ‰‹å…¥è„šæœ¬v1.3 by è®ºå›@sakura_candyï¼Œç¾¤å†…@è‚åŠ›ä¸è¶³
 --]]
 
-require("ÊÖÈë_¿â")
+require("æ‰‹å…¥_åº“")
 
 function EnterHospital()
     repeat
         Base.ClickRectEx(907,270,80,30)
         Base.Sleep(1000)
     until Hospital_IsColorAll()
-    Win.Print("½øÈëÊÖÈë»­Ãæ")
+    Win.Print("è¿›å…¥æ‰‹å…¥ç”»é¢")
 end
 
 function EnterBed(n)
-    msg = "¼ì²éÊÖÈëÊÒ·¬ºÅ %d ÊÇ·ñÓĞµ¶"
+    msg = "æ£€æŸ¥æ‰‹å…¥å®¤ç•ªå· %d æ˜¯å¦æœ‰åˆ€"
     Win.Print(msg:format(n))
     Base.Sleep(1000)
     if Bed_IsEmpty(n) then
-        msg = " %d ºÅÊÖÈëÊÒ¿ÕÏĞ"
+        msg = " %d å·æ‰‹å…¥å®¤ç©ºé—²"
         Win.Print(msg:format(n))
 
         repeat
@@ -27,7 +27,7 @@ function EnterBed(n)
             Base.Sleep(1000)
         until InBed_isColorAll()
 
-        Win.Print("½øÈëÊÖÈëÊÒ")
+        Win.Print("è¿›å…¥æ‰‹å…¥å®¤")
         return true
     else
         return false
@@ -41,12 +41,12 @@ function CheckSwordN(n)
         Base.ClickRectEx(454,y,20,20)
         Base.Sleep(1000)
     until SelectedSword_IsColorAll()
-    Win.Print("¼ì²éÊÇ·ñĞèÒªÊÖÈë")
+    Win.Print("æ£€æŸ¥æ˜¯å¦éœ€è¦æ‰‹å…¥")
     return CurrentSwordHealable()
 end
 
 function SetInstaHeal()
-    Win.Print("Ê¹ÓÃ¼ÓËÙ")
+    Win.Print("ä½¿ç”¨åŠ é€Ÿ")
     Base.ClickRectEx(670,392,100,8)
     Base.Sleep(1000)
     Base.ClickRectEx(670,413,100,8)
@@ -54,23 +54,23 @@ function SetInstaHeal()
 end
 
 function StartHeal()
-    Win.Print("¿ªÊ¼ÊÖÈë")
+    Win.Print("å¼€å§‹æ‰‹å…¥")
     Base.Sleep(1000)
     repeat
         Base.ClickRectEx(635,490,150,30)
         Base.Sleep(1000)
     until Hospital_IsColorAll()
-    --Win.Print("·µ»ØÊÖÈë»­Ãæ")
+    --Win.Print("è¿”å›æ‰‹å…¥ç”»é¢")
 end
 
 function ReturnHeal()
-    Win.Print("Ã»ÓĞĞèÒªÊÖÈëµÄµ¶")
+    Win.Print("æ²¡æœ‰éœ€è¦æ‰‹å…¥çš„åˆ€")
     Base.Sleep(1000)
     repeat
         Base.ClickRectEx(730,66,35,10)
         Base.Sleep(1000)
     until Hospital_IsColorAll()
-    --Win.Print("·µ»ØÊÖÈë»­Ãæ")
+    --Win.Print("è¿”å›æ‰‹å…¥ç”»é¢")
 end
 
 function Home_IsColorAll()
@@ -81,9 +81,9 @@ end
 
 function EnterHome()
     repeat
-        Base.Sleep(1000,true)  --µÈ´ı1Ãë
-        Base.ClickRectEx(900,65,50,10)  --³õÊ¼»¯»Ø±¾Íè
-        Base.Sleep(1000,true)  --µÈ´ı1Ãë
+        Base.Sleep(1000,true)  --ç­‰å¾…1ç§’
+        Base.ClickRectEx(900,65,50,10)  --åˆå§‹åŒ–å›æœ¬ä¸¸
+        Base.Sleep(1000,true)  --ç­‰å¾…1ç§’
     until Home_IsColorAll()
 
 end
@@ -93,10 +93,10 @@ function AutoHealMain(in_bed_count)
     bed_count = in_bed_count
 
 
-    Base.Sleep(500,true)  --µÈ´ı1Ãë
-    Win.Print("?sakura_candy ÊÖÈë½Å±¾v1.0¿ªÊ¼£¬³¢ÊÔ½øÈëÊÖÈë»­Ãæ")
-    EnterHospital() --½øÈëÊÖÈë»­Ãæ
-    Base.Sleep(1000,true)  --µÈ´ı1Ãë
+    Base.Sleep(500,true)  --ç­‰å¾…1ç§’
+    Win.Print("?sakura_candy æ‰‹å…¥è„šæœ¬v1.0å¼€å§‹ï¼Œå°è¯•è¿›å…¥æ‰‹å…¥ç”»é¢")
+    EnterHospital() --è¿›å…¥æ‰‹å…¥ç”»é¢
+    Base.Sleep(1000,true)  --ç­‰å¾…1ç§’
     idx = 1
     heal_count = 0  --return total number of swords healed
     repeat -- Bed loop
@@ -108,8 +108,8 @@ function AutoHealMain(in_bed_count)
                     Base.Sleep(1000,true)
                     StartHeal()
                     heal_count = heal_count+1
-                    Base.Sleep(1000,true)  --µÈ´ı1Ãë
-                    --»Øµ½±¾ÍèÒ»´Î£¬Ë¢ĞÂÊÖÈëÁĞ±í
+                    Base.Sleep(1000,true)  --ç­‰å¾…1ç§’
+                    --å›åˆ°æœ¬ä¸¸ä¸€æ¬¡ï¼Œåˆ·æ–°æ‰‹å…¥åˆ—è¡¨
                     EnterHome()
                     EnterHospital()
 
@@ -126,7 +126,7 @@ function AutoHealMain(in_bed_count)
     until idx >= bed_count
 
     EnterHome()
-    Win.Print("ÊÖÈë½Å±¾½áÊø")
+    Win.Print("æ‰‹å…¥è„šæœ¬ç»“æŸ")
     return heal_count
 end
 
