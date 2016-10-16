@@ -1,7 +1,18 @@
 --[[
 刀_模块化脚本 v0.1 by 群内@黒田くん
-API扩展: 在原有API的基础上增加新的功能，还有一些常用的函数也顺便放这里了
+API扩展：在原有API的基础上增加新的功能，还有一些常用的函数也顺便放这里了
 --]]
+
+if table.index_of == nil then
+    function table.index_of(array, value)
+        for i, v in ipairs(array) do
+            if v == value then
+                return i
+            end
+        end
+        return 0
+    end
+end
 
 if table.map == nil then
     function table.map(array, func)
@@ -52,12 +63,12 @@ if 等待 == nil then
         local arg = table.pack(...)
         local is_simple_function = (#arg == 1)
         local timer = 0
-        while not (is_simple_function and arg[1]() or arg[1][arg[2]](arg[1])) do
-            if 设定.状态检查超时 > 0 and timer >= 设定.状态检查超时 then
+        while not (is_simple_function and arg[1]() or not is_simple_function and arg[1][arg[2]](arg[1])) do
+            if 全局设定.状态检查超时 > 0 and timer >= 全局设定.状态检查超时 then
                 return false
             end
-            timer = timer + 设定.状态检查间隔
-            Base.Sleep(设定.状态检查间隔)
+            timer = timer + 全局设定.状态检查间隔
+            Base.Sleep(全局设定.状态检查间隔)
         end
         return true
     end

@@ -1,16 +1,67 @@
 --[[
 刀_模块化脚本 v0.1 by 群内@黒田くん
-通用： 尽是一些很多界面里都通用的东西，用的时候随时载入吧
+通用：尽是一些很多界面里都通用的东西，用的时候随时载入吧
 --]]
 
 require("API扩展")
 
 local 通用 = {}
 
--- 翻页相关
--- 结成： 320, 543
--- 手入： 316, 543
+-- 各式常量
+local 常量 = {
+    受伤百分比 = {
+        微伤 = 0.999,
+        轻伤 = 0.9,
+        中伤 = 0.65,
+        重伤 = 0.31,
+    },
+    手入部屋 = {
+        刀位置 = {
+            {128, 80},
+            {128, 157},
+            {128, 234},
+            {128, 311},
+            {128, 388},
+            {128, 465},
+        },
+        血条宽度 = 137,
+    },
+    翻页位移 = {
+        结成 = {320, 543},
+        手入 = {316, 543},
+    },
+}
+通用.常量 = 常量
 
+
+-- 本丸相关
+local 本丸 = {}
+
+function 本丸.在本丸()
+    return Base.IsColor(53, 72, 11397105)
+end
+
+function 本丸.回本丸()
+    repeat
+        Base.ClickRectEx(900, 65, 50, 10)
+        Base.Sleep(500, true)
+    until 等待(本丸.在本丸)
+    Win.Print("通用：返回本丸")
+end
+
+function 本丸.等待本丸()
+    Win.Print("通用：等待本丸")
+    while true do
+        if 等待(本丸.在本丸) then
+            break
+        end
+    end
+end
+
+通用.本丸 = 本丸
+
+
+-- 翻页相关
 local 翻页 = {}
 
 function 翻页.当前界面可以翻页(self)
@@ -23,11 +74,11 @@ function 翻页.当前界面可以翻页(self)
     })
 end
 
-function 翻页.已在首页(self)
+function 翻页.在首页(self)
     return Base.IsColor(0 + self.x_offset, 7 + self.y_offset, 3355443)
 end
 
-function 翻页.已在尾页(self)
+function 翻页.在尾页(self)
     return Base.IsColor(268 + self.x_offset, 7 + self.y_offset, 3355443)
 end
 

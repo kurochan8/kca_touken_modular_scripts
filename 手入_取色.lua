@@ -1,24 +1,14 @@
 --[[
 刀_模块化脚本 v0.1 by 群内@黒田くん
-手入_取色： 部分基于手入脚本v1.2（取色part） by 论坛@sakura_candy，群内@肝力不足
+手入_取色：很大一部分基于手入脚本v1.2（取色part），感谢论坛@sakura_candy，群内@肝力不足
 --]]
 
 require("API扩展")
 
 local 取色 = {}
-取色.选刀界面 = {
-    刀位置 = {
-        {128, 80},
-        {128, 157},
-        {128, 234},
-        {128, 311},
-        {128, 388},
-        {128, 465},
-    },
-    血条宽度 = 137,
-}
+local 常量 = require("通用").常量
 
-function 取色.在手入界面内()
+function 取色.在主界面内()
     return Base.IsColorAll({
         {165, 106, 14220285},
         {732, 256, 10740205},
@@ -47,7 +37,7 @@ function 取色.检查手入部屋状态()
     })
 end
 
-function 取色.在手入房间内()
+function 取色.在手入部屋内()
     return Base.IsColorAll({
         {552, 279, 7830397},
         {745, 443, 13233909},
@@ -55,27 +45,27 @@ function 取色.在手入房间内()
 end
 
 function 取色.检查刀血量()
-    local check_sword_hp = function (coord)
-        local x, y = table.unpack(coord)
-        local actual_hp = 取色.选刀界面.血条宽度
-        while Base.IsColor(x + 8 + actual_hp - 1, y + 66, 407914) do
-            actual_hp = actual_hp - 1
+    local 检查刀HP = function (座标)
+        local x, y = table.unpack(座标)
+        local 实际血条宽度 = 常量.手入部屋.血条宽度
+        while Base.IsColor(x + 8 + 实际血条宽度 - 1, y + 66, 407914) do
+            实际血条宽度 = 实际血条宽度 - 1
         end
-        return actual_hp / 取色.选刀界面.血条宽度
+        return 实际血条宽度 / 常量.手入部屋.血条宽度
     end
-    return table.unpack(table.map(取色.选刀界面.刀位置, check_sword_hp))
+    return table.unpack(table.map(常量.手入部屋.刀位置, 检查刀HP))
 end
 
 function 取色.检查刀是否已在手入()
-    local check_sword_status = function (coord)
-        local x, y = table.unpack(coord)
+    local 检查刀状态 = function (座标)
+        local x, y = table.unpack(座标)
         return Base.IsColorAll({
             -- 这里取的点特别靠下所以准确度不受樱吹雪的影响
             {x + 184, y + 50, 15232533},
             {x + 198, y + 50, 15232533},
         })
     end
-    return table.unpack(table.map(取色.选刀界面.刀位置, check_sword_status))
+    return table.unpack(table.map(常量.手入部屋.刀位置, 检查刀状态))
 end
 
 function 取色.已选刀()
