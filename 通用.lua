@@ -9,6 +9,25 @@ local 通用 = {}
 
 -- 各式常量
 local 常量 = {
+    刀装 = {
+        种类 = {
+            投石兵 = 1,
+            槍兵 = 2,
+            軽歩兵 = 3,
+            重歩兵 = 4,
+            盾兵 = 5,
+            軽騎兵 = 6,
+            重騎兵 = 7,
+            精鋭兵 = 8,
+            弓兵 = 9,
+            銃兵 = 10,
+        },
+        质量 = {
+            特上 = 100,
+            上 = 200,
+            並 = 300,
+        },
+    },
     受伤百分比 = {
         微伤 = 0.999,
         轻伤 = 0.9,
@@ -69,6 +88,51 @@ end
 通用.本丸 = 本丸
 
 
+-- 结成相关
+local 结成 = {}
+
+function 结成.在结成界面()
+    return Base.IsColorAll({
+        {877, 143, 3750327},
+        {943, 159, 526464},
+    })
+end
+
+function 结成.去结成画面()
+    repeat
+        Base.ClickRectEx2(864, 135, 949, 165)
+        Base.Sleep(500, true)
+    until 等待(结成.在结成界面)
+    Win.Print("通用：进入结成画面")
+end
+
+function 结成.当前队伍编号()
+    if Base.IsColorAll({
+        {},
+        {},
+    }) then return 1 end
+    if Base.IsColorAll({
+        {},
+        {},
+    }) then return 2 end
+    if Base.IsColorAll({
+        {},
+        {},
+    }) then return 3 end
+    if Base.IsColorAll({
+        {},
+        {},
+    }) then return 4 end
+    return 0
+end
+
+function 结成.选择队伍(n)
+
+end
+
+通用.结成 = 结成
+
+
 -- 翻页相关
 local 翻页 = {}
 
@@ -127,5 +191,6 @@ end
 setmetatable(翻页, {__call = 翻页.new})
 
 通用.翻页 = 翻页
+
 
 return 通用

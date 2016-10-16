@@ -20,11 +20,14 @@ function 任务组.开始运行(self)
 
         Win.Print("任务组：开始执行第" .. tostring(i) .. "次循环")
         for j = 1, #self.任务序列, 1 do
-            if not self.任务序列[j]["执行"] or type(self.任务序列[j]["执行"]) ~= "function" then
+            if type(self.任务序列[j]) == "function" then
+                self.任务序列[j]()
+            elseif self.任务序列[j]["执行"] and type(self.任务序列[j]["执行"]) == "function" then
+                self.任务序列[j]["执行"](self.任务序列[j])
+            else
                 Win.Print("任务组：检测到无效任务，中止运行")
                 Win.Print("任务组：" .. require("inspect")(self.任务序列[j]))
             end
-            self.任务序列[j]["执行"](self.任务序列[j])
         end
     end
     Win.Print("任务组：到达指定循环次数，结束运行")

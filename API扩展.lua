@@ -58,6 +58,33 @@ if Base.IsOneOfColorsAll == nil then
     end
 end
 
+if Base.ClickRectEx2 == nil then
+    -- 根据两个点选择长方形区域并且随机点击其中一点
+    function Base.ClickRectEx2(x1, y1, x2, y2)
+
+        -- 修正座标
+        if x2 < x1 then
+            local temp = x2
+            x2 = x1
+            x1 = temp
+        end
+        if y2 < y1 then
+            local temp = y2
+            y2 = y1
+            y1 = temp
+        end
+
+        local width = x2 - x1
+        local height =  y2 - y1
+
+        -- 修正宽高为2的倍数
+        width = math.floor(width / 2) * 2
+        height = math.floor(height / 2) * 2
+
+        return Base.ClickRectEx(x1 + width / 2, y1 + height / 2, width, height)
+    end
+end
+
 if 等待 == nil then
     function 等待(...)
         local arg = table.pack(...)
