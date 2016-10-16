@@ -8,7 +8,7 @@ require("API扩展")
 local 通用 = require("通用")
 local 常量 = 通用.常量
 local 本丸 = 通用.本丸
-local 翻页 = 通用.翻页(table.unpack(常量.翻页位移.手入))
+local 翻页 = 通用.翻页(常量.翻页.全体位移.手入, 常量.翻页.控制位移.手入)
 local 取色 = require("手入_取色")
 
 local 手入 = {}
@@ -48,7 +48,7 @@ end
 function 手入.开始手入(self)
     repeat
         Base.ClickRectEx(635, 490, 150, 30)
-        Base.Sleep(500, true)
+        Base.Sleep(500)
     until 等待(取色.在主界面内)
     Win.Print("手入：开始手入")
 end
@@ -63,6 +63,9 @@ function 手入.执行(self)
 
     while true do
         等待(取色.在主界面内)
+
+        -- 做思考状_(:3」∠)_
+        Base.Sleep(1000, true)
 
         local 手入部屋状态 = {取色.检查手入部屋状态()}
         for i, v in ipairs(self.设定.可用部屋) do
@@ -105,11 +108,11 @@ function 手入.执行(self)
                 end
             end
 
-            if 扫描完毕 or not self.设定.优先治疗高受伤等级 and #需要手入的刀剑 > 0 or 翻页：在尾页() then
+            if 扫描完毕 or not self.设定.优先治疗高受伤等级 and #需要手入的刀剑 > 0 or 翻页:在尾页() then
                 break
             end
 
-            翻页：去下一页()
+            翻页:去下一页()
             当前页码 = 当前页码 + 1
         end
 
@@ -125,9 +128,9 @@ function 手入.执行(self)
         Win.Print("手入：已找到需要治疗的刀剑")
 
         if 要执行手入的刀.页码 > 1 then
-            翻页：去首页()
+            翻页:去首页()
             for i = 1, 要执行手入的刀.页码 - 1, 1 do
-                翻页：去下一页()
+                翻页:去下一页()
             end
         end
 

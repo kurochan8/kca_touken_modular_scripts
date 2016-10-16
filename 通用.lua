@@ -26,9 +26,17 @@ local 常量 = {
         },
         血条宽度 = 137,
     },
-    翻页位移 = {
-        结成 = {320, 543},
-        手入 = {316, 543},
+    翻页 = {
+        全体位移 = {
+            结成 = {320, 543},
+            手入 = {316, 543},
+            装备选择 = {127, 548},
+        },
+        控制位移 = {
+            结成 = {6, 32, 235, 262},
+            手入 = {6, 32, 235, 262},
+            装备选择 = {6, 22, 194, 211},
+        },
     },
 }
 通用.常量 = 常量
@@ -66,8 +74,8 @@ local 翻页 = {}
 
 function 翻页.当前界面可以翻页(self)
     return Base.IsOneOfColorsAll({
-        {0 + self.x_offset, 7 + self.y_offset},
-        {268 + self.x_offset, 7 + self.y_offset},
+        {self.overall_offsets[1], 4 + self.overall_offsets[2]},
+        {self.overall_offsets[1], 10 + self.overall_offsets[2]},
     }, {
         3355443,
         5046092,
@@ -75,38 +83,44 @@ function 翻页.当前界面可以翻页(self)
 end
 
 function 翻页.在首页(self)
-    return Base.IsColor(0 + self.x_offset, 7 + self.y_offset, 3355443)
+    return Base.IsColor(self.control_offsets[1] + self.overall_offsets[1] - 6, 7 + self.overall_offsets[2], 3355443)
 end
 
 function 翻页.在尾页(self)
-    return Base.IsColor(268 + self.x_offset, 7 + self.y_offset, 3355443)
+    return Base.IsOneOfColors({
+        self.control_offsets[4] + self.overall_offsets[1] + 6,
+        7 + self.overall_offsets[2],
+    }, {
+        3355443,
+        2763306,
+    })
 end
 
 function 翻页.去上一页(self)
-    Base.ClickRect(32 + self.x_offset, 7 + self.y_offset, 10)
+    Base.ClickRect(self.control_offsets[2] + self.overall_offsets[1], 7 + self.overall_offsets[2], 10)
     Base.Sleep(500)
 end
 
 function 翻页.去下一页(self)
-    Base.ClickRect(235 + self.x_offset, 7 + self.y_offset, 10)
+    Base.ClickRect(self.control_offsets[3] + self.overall_offsets[1], 7 + self.overall_offsets[2], 10)
     Base.Sleep(500)
 end
 
 function 翻页.去首页(self)
-    Base.ClickRect(6 + self.x_offset, 7 + self.y_offset, 10)
+    Base.ClickRect(self.control_offsets[1] + self.overall_offsets[1], 7 + self.overall_offsets[2], 10)
     Base.Sleep(500)
 end
 
 function 翻页.去尾页(self)
-    Base.ClickRect(262 + self.x_offset, 7 + self.y_offset, 10)
+    Base.ClickRect(self.control_offsets[4] + self.overall_offsets[1], 7 + self.overall_offsets[2], 10)
     Base.Sleep(500)
 end
 
-function 翻页:new(x_offset, y_offset)
+function 翻页:new(overall_offsets, control_offsets)
     local instance = {}
     setmetatable(instance, {__index = 翻页})
-    instance.x_offset = x_offset
-    instance.y_offset = y_offset
+    instance.overall_offsets = overall_offsets
+    instance.control_offsets = control_offsets
     return instance
 end
 
