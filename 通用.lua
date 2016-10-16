@@ -98,7 +98,7 @@ function 结成.在结成界面()
     })
 end
 
-function 结成.去结成画面()
+function 结成.去结成界面()
     repeat
         Base.ClickRectEx2(864, 135, 949, 165)
         Base.Sleep(500, true)
@@ -106,28 +106,41 @@ function 结成.去结成画面()
     Win.Print("通用：进入结成画面")
 end
 
-function 结成.当前队伍编号()
+-- 如果提供n参数，返回boolean；如果不提供n参数，返回数字
+function 结成.当前队伍编号(n)
+    local result = 0
     if Base.IsColorAll({
-        {},
-        {},
-    }) then return 1 end
+        {779, 85, 13760508},
+        {766, 155, 6996971},
+    }) then result = 1 end
     if Base.IsColorAll({
-        {},
-        {},
-    }) then return 2 end
+        {779, 218, 13760508},
+        {766, 291, 6996971},
+    }) then result = 2 end
     if Base.IsColorAll({
-        {},
-        {},
-    }) then return 3 end
+        {779, 349, 13760508},
+        {765, 424, 6996971},
+    }) then result = 3 end
     if Base.IsColorAll({
-        {},
-        {},
-    }) then return 4 end
-    return 0
+        {779, 482, 13760508},
+        {765, 555, 6996971},
+    }) then result = 4 end
+    if n then
+        return result == n
+    else
+        return result
+    end
 end
 
 function 结成.选择队伍(n)
-
+    if 结成.当前队伍编号(n) then
+        return
+    end
+    repeat
+        Base.ClickRectEx2(761, -67 + 132 * n, 781, 34 + 132 * n)
+        Base.Sleep(500, true)
+    until 等待(结成.当前队伍编号, n)
+    Win.Print("通用：切换到部队" .. tostring(n))
 end
 
 通用.结成 = 结成

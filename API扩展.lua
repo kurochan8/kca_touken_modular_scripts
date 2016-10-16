@@ -88,9 +88,18 @@ end
 if 等待 == nil then
     function 等待(...)
         local arg = table.pack(...)
-        local is_simple_function = (#arg == 1)
         local timer = 0
-        while not (is_simple_function and arg[1]() or not is_simple_function and arg[1][arg[2]](arg[1])) do
+        local check_func = nil
+
+        if type(arg[1]) == "function" then
+            check_func = arg[1]
+            table.remove(arg, 1)
+        else
+            check_func = arg[1][arg[2]]
+            table.remove(arg, 2)
+        end
+
+        while not check_func(table.unpack(arg)) do
             if 全局设定.状态检查超时 > 0 and timer >= 全局设定.状态检查超时 then
                 return false
             end
