@@ -120,3 +120,14 @@ if 快速测试 == nil then
         end
     end
 end
+
+if 快速测试2 == nil then
+    function 快速测试2(func, range)
+        local result = {}
+        for i = 1, range, 1 do
+            table.insert(result, func(i))
+        end
+        return table.unpack(result)
+    end
+end
+
