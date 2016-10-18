@@ -96,7 +96,7 @@ function 取色.装备选择界面已打开()
     })
 end
 
-function 取色.取得装备信息(n)
+function 取色.取得刀装(n)
     if not n then return 快速测试2(取色.取得装备信息, 6) end
     local translate_coord = function (a)
         return {a[1] + 133, a[2] + 5 + n * 78, a[3]}
@@ -133,10 +133,10 @@ function 取色.已装备刀装(n)
     })
 end
 
-function 取色.取得当前页面装备信息()
+function 取色.取得当前页面刀装()
     local result = {}
     for i = 1, 6, 1 do
-        table.insert(result, 取色.取得装备信息(i))
+        table.insert(result, 取色.取得刀装(i))
     end
     return result
 end

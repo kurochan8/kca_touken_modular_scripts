@@ -139,7 +139,8 @@ function 手入.执行(self)
 
         if not 取色.已选刀可手入() then
             Win.Print("手入：脚本出现异常")
-            return 0
+            本丸.回本丸()
+            return 总治疗刀数
         end
 
         if self.设定.使用加速受伤等级 and 要执行手入的刀.血量 <= 常量.受伤百分比[self.设定.使用加速受伤等级] then

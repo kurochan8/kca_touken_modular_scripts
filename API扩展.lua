@@ -3,6 +3,17 @@
 API扩展：在原有API的基础上增加新的功能，还有一些常用的函数也顺便放这里了
 --]]
 
+if table.key_of == nil then
+    function table.key_of(array, value)
+        for k, v in pairs(array) do
+            if v == value then
+                return k
+            end
+        end
+        return nil
+    end
+end
+
 if table.index_of == nil then
     function table.index_of(array, value)
         for i, v in ipairs(array) do
@@ -19,6 +30,18 @@ if table.map == nil then
         local new_array = {}
         for i, v in ipairs(array) do
             new_array[i] = func(v)
+        end
+        return new_array
+    end
+end
+
+if table.filter == nil then
+    function table.filter(array, func)
+        local new_array = {}
+        for i, v in ipairs(array) do
+            if func(v) then
+                table.insert(new_array, v)
+            end
         end
         return new_array
     end
@@ -130,4 +153,3 @@ if 快速测试2 == nil then
         return table.unpack(result)
     end
 end
-
