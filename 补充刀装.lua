@@ -221,8 +221,8 @@ function 补充刀装.执行(self)
         end
     end
 
-    本丸.回本丸()
     Win.Print("补充刀装：任务结束，共补充" .. tostring(总补充刀装数) .. "个刀装")
+    本丸.回本丸()
     return 总补充刀装数
 end
 
