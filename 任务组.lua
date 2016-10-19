@@ -38,7 +38,7 @@ function 任务组:new(任务序列, 循环次数, 超时)
     setmetatable(instance, {__index = 任务组})
     Base.SetConfig("Sleep+?", 全局设定.操作延时上限)
     instance.任务序列 = 任务序列
-    instance.循环次数 = 循环次数 or 0
+    instance.循环次数 = 循环次数 or 2147483647
     instance.超时 = 超时 or 86400
     return instance
 end
