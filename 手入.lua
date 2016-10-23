@@ -94,7 +94,7 @@ function 手入.执行(self)
 
             for 当前位置, 当前血量 in ipairs(当前页面刀剑血量) do
 
-                if 当前血量 == 1 then
+                if 当前位置 == 6 and 当前血量 == 1 then
                     扫描完毕 = true
                     break
                 end
