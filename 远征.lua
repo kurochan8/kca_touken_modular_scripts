@@ -163,7 +163,7 @@ function 远征.执行(self)
             远征.TeamGo(4, self.设定.远征队伍时代[3][1], self.设定.远征队伍时代[3][2])
         end
 
-        本丸.回本丸()
+        通用.本丸.回本丸()
         Win.Print("远征：任务结束")
         return Num
 end
