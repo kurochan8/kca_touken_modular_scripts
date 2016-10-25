@@ -83,7 +83,7 @@ function 本丸.回本丸()
             Base.ClickRect(770, 69, 10)
         elseif 本丸.在刀帐() then
             Base.ClickRect(859, 548, 4)
-        else then
+        else
             Base.ClickRectEx(900, 65, 50, 10)
         end
         Base.Sleep(500, true)
@@ -116,6 +116,8 @@ function 出阵.去出阵界面()
     until 等待(出阵.在出阵界面)
     Win.Print("通用：进入出阵界面")
 end
+
+通用.出阵 = 出阵
 
 -- 结成相关
 local 结成 = {}

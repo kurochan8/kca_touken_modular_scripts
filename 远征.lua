@@ -72,9 +72,9 @@ end
 function 远征.TeamGo(Team, Map, Point)
 
     -- 选择时代和目的地
-    取色.Time_ID(Map)
+    远征.Time_ID(Map)
     Base.Sleep(500, true)
-    取色.Point_ID(Point)
+    远征.Point_ID(Point)
     Base.Sleep(500, true)
 
     if not 取色.TeamChoiceGreen_IsColorAll() then
