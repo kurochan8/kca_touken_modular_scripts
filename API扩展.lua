@@ -153,3 +153,38 @@ if ¿ìËÙ²âÊÔ2 == nil then
         return table.unpack(result)
     end
 end
+
+if Base.IsHash == nil then
+    function Base.IsHash(hash, x, y, width, height, thershold)
+        thershold = thershold or 10;
+        return (Base.ImageHashContrast(Base.ImageHash(x, y, width, height), hash) < thershold);
+    end
+end
+
+if Base.WaitHash == nil then
+    function Base.WaitHash(hash, x, y, width, height, thershold, interval, duration)
+        local hashImage = "";
+        local time = 0;
+        local lastTime = 0;
+        local flag = false;
+    
+        thershold = thershold or 10;
+        interval = interval or 1000;
+        duration = duration or 180;
+    
+        while time < duration do
+            lastTime = os.clock() * 100;
+            hashImage = Base.ImageHash(x, y, width, height);
+            if Base.ImageHashContrast(hashImage, hash) < thershold then 
+                return true;
+            end
+            while (os.clock() * 100 - lastTime) < (interval / 10) do
+            end
+            time = time + (interval / 1000);
+            if time % 10 == 0 then
+                Base.Print("WaitHash: " .. time .. "s/" .. duration .. "s");
+            end
+        end
+        return false;
+    end
+end
