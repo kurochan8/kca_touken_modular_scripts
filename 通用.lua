@@ -45,6 +45,19 @@ local 常量 = {
             {128, 465},
         },
         血条宽度 = 137,
+        血条颜色 = 407914,
+    },
+    结成 = {
+        刀位置 = {
+            {132, 79},
+            {132, 156},
+            {132, 233},
+            {132, 310},
+            {132, 387},
+            {132, 464},
+        },
+        血条宽度 = 137,
+        血条颜色 = 604521,
     },
     翻页 = {
         全体位移 = {
@@ -172,6 +185,18 @@ function 结成.选择队伍(n)
         Base.Sleep(500, true)
     until 等待(结成.当前队伍编号, n)
     Win.Print("通用：切换到部队" .. tostring(n))
+end
+
+function 结成.检查刀血量()
+    local 检查刀HP = function (座标)
+        local x, y = table.unpack(座标)
+        local 实际血条宽度 = 常量.结成.血条宽度
+        while Base.IsColorEx(x + 8 + 实际血条宽度 - 1, y + 66, 常量.结成.血条颜色, 5) do
+            实际血条宽度 = 实际血条宽度 - 1
+        end
+        return 实际血条宽度 / 常量.结成.血条宽度
+    end
+    return table.unpack(table.map(常量.结成.刀位置, 检查刀HP))
 end
 
 通用.结成 = 结成

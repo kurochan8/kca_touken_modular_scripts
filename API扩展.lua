@@ -154,3 +154,15 @@ if 快速测试2 == nil then
         return table.unpack(result)
     end
 end
+
+if IsDmmunlocker == nil then
+    --判断界面是否正确
+    function IsDmmunlocker()
+        return Base.IsColorAll({
+            {17, 19, 16777215},
+            {52, 15, 16777215},
+            {105, 16, 16777215},
+            {165, 16, 16777215},
+        })
+    end
+end

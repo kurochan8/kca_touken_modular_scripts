@@ -50,7 +50,7 @@ function 取色.检查刀血量()
     local 检查刀HP = function (座标)
         local x, y = table.unpack(座标)
         local 实际血条宽度 = 常量.手入部屋.血条宽度
-        while Base.IsColor(x + 8 + 实际血条宽度 - 1, y + 66, 407914) do
+        while Base.IsColorEx(x + 8 + 实际血条宽度 - 1, y + 66, 常量.手入部屋.血条颜色, 5) do
             实际血条宽度 = 实际血条宽度 - 1
         end
         return 实际血条宽度 / 常量.手入部屋.血条宽度
