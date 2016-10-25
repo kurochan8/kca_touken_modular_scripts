@@ -39,7 +39,7 @@ team_id = 1
     }),
     创建补充刀装任务({
         部队号 = 1,
-		--策略是已经预设好的，详情去 补充刀装.lua 里查看或者自行添加自己想要的策略
+        --策略是已经预设好的，详情去 补充刀装.lua 里查看或者自行添加自己想要的策略
         [1] = {
             策略 = "轻骑投石轻步",
             允许补充任意刀装 = false,
@@ -173,8 +173,8 @@ if IsDmmunlocker() == false and status >= 0 then
             Base.ReLoad()
             while Base.IsColor(468,453,7747046) == false
             do
-             Base.Click(468,453)
-             Base.Sleep(2000,true)
+                Base.Click(468,453)
+                Base.Sleep(2000,true)
             end
             Base.Click(468,453)
         end
@@ -186,15 +186,15 @@ if IsDmmunlocker() == false and status >= 0 then
 
         if ret == 0 then
             status = 手入和补刀装:开始运行()
-			if status < 0 then
-				Win.Print('手入补刀装任务出错，中断脚本')  -- 比如没有空余手入位
-				break
-			end
+            if status < 0 then
+                Win.Print('手入补刀装任务出错，中断脚本')  -- 比如没有空余手入位
+                break
+            end
         end
 
     end
 else
-    Win.Print('坐标无法对应，脚本无法运行 | 模块化脚本失败') 
+    Win.Print('坐标无法对应，脚本无法运行 | 模块化脚本失败')
 end
 
 Win.Pop('脚本执行完毕！')
