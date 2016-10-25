@@ -10,8 +10,8 @@ local 任务组 = {}
 function 任务组.开始运行(self)
     local 任务开始时间 = os.time()
     Win.Print("任务组：开始运行")
+	local return_code = 0
     for i = 1, self.循环次数, 1 do
-
         local 当前时间 = os.time()
         if self.超时 > 0 and 当前时间 - 任务开始时间 > self.超时 then
             Win.Print("任务组：执行超时，结束运行")
@@ -19,7 +19,7 @@ function 任务组.开始运行(self)
         end
 
         Win.Print("任务组：开始执行第" .. tostring(i) .. "次循环")
-		local return_code = 0
+		
         for j = 1, #self.任务序列, 1 do
             if type(self.任务序列[j]) == "function" then
                 return_code = self.任务序列[j]()

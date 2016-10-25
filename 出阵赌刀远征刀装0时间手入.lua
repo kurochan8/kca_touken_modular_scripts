@@ -1,29 +1,12 @@
---就是个大杂烩 BY sakura_candy，群内@肝力不足
---赌刀library：uint
---手入：黑田（超级改良版）& <划掉>我</划掉>
---远征：MaSaXX
---智能拆刀：玄月（疑似弃坑？）
---日课（赌刀框架）：sieben （收日课什么的经常卡所以已经关掉了，记得每天刷新一次游戏刷登陆啊！）
---补刀装：黑田
-
---基本上是黑田的了，只是contribute一下
+--出阵+补刀装+手入
 
 require("刀_模块化脚本")
 
 ---------------------------------------------------------------------
 --这里是设置区域 一般只需修改这里的值即可
 
---远征开关
---要远征的话需要在TouKen_远征_0.6.0_mod.lua和TouKen_远征_0.6.0.lua 修改设置和开关，一定要一致
-远征开关 = true
-
---赌刀开关，同上，在Touken_Smith.lua里面设置你要的配方，赌刀位。现在是
-smith = false
---运行时间上限，以秒计算（写个长时间就好，怕赌刀出4h可是拆刀脚本出检测错误不小心拆了，可以用14400，4小时）
+--运行时间上限，以秒计算（写个长时间就好，比如14400 = 4小时）
 stop_timer = 144000
-
---手入床位，最低1，最高4，如果你只氪了4号位没氪3号…… 既然都氪了4号位为啥不氪3号呢？（这种情况放4应该也可以吧）
-bed_count = 4
 
 --如果是true，重伤后不停止脚本。一定一定要和后面的“创建手入任务”和“创建补充刀装任务”一起用。
 --注意！！！！！！千万不要长时间AFK，红脸碎刀是有概率存在的！！！！本婶碎了三把了嘤嘤嘤嘤嘤嘤 ---BY 肝力不足
@@ -31,7 +14,7 @@ bed_count = 4
 重伤后直接手入继续肝 = true
 
 --地图
-map_id = {2,4}
+map_id = {7,3}
 
 max_count = 10000
 --最多进入多少次地图
@@ -59,27 +42,27 @@ team_id = 1
 		--策略是已经预设好的，详情去 补充刀装.lua 里查看或者自行添加自己想要的策略
         [1] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
         [2] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
         [3] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
         [4] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
         [5] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
         [6] = {
             策略 = "轻骑投石轻步",
-            允许补充任意刀装 = true,
+            允许补充任意刀装 = false,
         },
     }),
 }, 1)
@@ -139,9 +122,9 @@ end
 local startT = os.clock()
 Win.Print(string.format("Start time %.2f\n", startT))
 
-手入和补刀装:开始运行()
+status = 手入和补刀装:开始运行()
 
-if IsDmmunlocker() == false then
+if IsDmmunlocker() == false and status >= 0 then
     mode = 0
     if 战斗中遇到检非停止脚本 == true then
         mode = mode + 4
@@ -162,21 +145,6 @@ if IsDmmunlocker() == false then
 
         a = "开始第:%d次"
         Win.Print(a:format(n))
-
-        if 远征开关 == true then
-            Win.Print("远征")
-            package.loaded["TouKen_Expedition_0_6_0_mod"] = nil
-            require("TouKen_Expedition_0_6_0_mod")
-
-        end
-        if smith == true then
-
-            Win.Print("赌刀")
-            package.loaded["Touken_Smith"] = nil
-            require("Touken_Smith")
-        end
-
-        EnterHome()
 
         if Touken.出阵(map_id[1],map_id[2],遇到检非不进入地图) == false then
             Win.Print('无法出阵退出')
@@ -217,7 +185,6 @@ if IsDmmunlocker() == false then
         end
 
         if ret == 0 then
-            Win.Print('既然是0时间手入那就大家都去检查一遍再开始下一轮的肝') -- 比如没有空余手入位
             status = 手入和补刀装:开始运行()
 			if status < 0 then
 				Win.Print('手入补刀装任务出错，中断脚本')  -- 比如没有空余手入位
@@ -227,7 +194,7 @@ if IsDmmunlocker() == false then
 
     end
 else
-    Win.Print('检测到游戏内存在空白，坐标无法对应，脚本无法运行！') --发现重伤了
+    Win.Print('坐标无法对应，脚本无法运行 | 模块化脚本失败') 
 end
 
 Win.Pop('脚本执行完毕！')
