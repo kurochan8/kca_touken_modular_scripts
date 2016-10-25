@@ -1,5 +1,6 @@
 --出阵+补刀装+手入
 
+
 require("刀_模块化脚本")
 
 ---------------------------------------------------------------------
@@ -67,6 +68,11 @@ team_id = 1
     }),
 }, 1)
 
+远征任务 = 创建任务组({
+    创建远征任务({
+        远征队伍时代 = {{1,1}, {2,4}, {3,2}},
+    }),}, 1)
+
 
 ignore_lv_msg = false
 --是否无视等级提示
@@ -88,6 +94,8 @@ Base.SetConfig("Sleep+?", 331)
 ---------------------------------------------------------------------
 
 --下面的东西不要乱改了！ 就改上面的设置就行
+local 通用 = require("通用")
+
 function IsColorAll(array)
     n = 0
     ok = 0
@@ -122,6 +130,7 @@ end
 local startT = os.clock()
 Win.Print(string.format("Start time %.2f\n", startT))
 
+通用.本丸.回本丸()
 status = 手入和补刀装:开始运行()
 
 if IsDmmunlocker() == false and status >= 0 then
@@ -142,7 +151,9 @@ if IsDmmunlocker() == false and status >= 0 then
             Win.Print("时间到，停止循环")
             break
         end
-
+        
+        远征任务:开始运行()
+        
         a = "开始第:%d次"
         Win.Print(a:format(n))
 
