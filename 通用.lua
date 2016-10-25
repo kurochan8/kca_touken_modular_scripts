@@ -1,6 +1,7 @@
 --[[
-刀_模块化脚本 v0.1 by 群内@黒田くん
+刀_模块化脚本
 通用：尽是一些很多界面里都通用的东西，用的时候随时载入吧
+作者：黒田くん
 --]]
 
 require("API扩展")
@@ -68,9 +69,23 @@ function 本丸.在本丸()
     return Base.IsColor(53, 72, 11397105)
 end
 
+function 本丸.在信箱()
+    return Base.IsColor(730, 157, 6931435)
+end
+
+function 本丸.在刀帐()
+    return Base.IsColor(853, 556, 353499)
+end
+
 function 本丸.回本丸()
     repeat
-        Base.ClickRectEx(900, 65, 50, 10)
+        if 本丸.在信箱() then
+            Base.ClickRect(770, 69, 10)
+        elseif 本丸.在刀帐() then
+            Base.ClickRect(859, 548, 4)
+        else then
+            Base.ClickRectEx(900, 65, 50, 10)
+        end
         Base.Sleep(500, true)
     until 等待(本丸.在本丸)
     Win.Print("通用：返回本丸")
@@ -87,6 +102,20 @@ end
 
 通用.本丸 = 本丸
 
+-- 出阵相关
+local 出阵 = {}
+
+function 出阵.在出阵界面()
+    return Base.IsColor(218, 179, 10178876)
+end
+
+function 出阵.去出阵界面()
+    repeat
+        Base.ClickRectEx(908, 111, 20, 8)
+        Base.Sleep(500, true)
+    until 等待(出阵.在出阵界面)
+    Win.Print("通用：进入出阵界面")
+end
 
 -- 结成相关
 local 结成 = {}
@@ -103,7 +132,7 @@ function 结成.去结成界面()
         Base.ClickRectEx2(864, 135, 949, 165)
         Base.Sleep(500, true)
     until 等待(结成.在结成界面)
-    Win.Print("通用：进入结成画面")
+    Win.Print("通用：进入结成界面")
 end
 
 -- 如果提供n参数，返回boolean；如果不提供n参数，返回数字

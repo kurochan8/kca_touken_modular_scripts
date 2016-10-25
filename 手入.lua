@@ -1,6 +1,8 @@
 --[[
-刀_模块化脚本 v0.1 by 群内@黒田くん
-手入：部分基于手入脚本v1.3，感谢论坛@sakura_candy，群内@肝力不足
+刀_模块化脚本
+手入：部分基于手入脚本v1.3
+原作者：sakura_candy（肝力不足）
+模块化作者：黒田くん
 --]]
 
 require("API扩展")
@@ -18,7 +20,7 @@ function 手入.进入主界面(self)
         Base.ClickRectEx(907, 270, 80, 30)
         Base.Sleep(500, true)
     until 等待(取色.在主界面内)
-    Win.Print("手入：进入手入画面")
+    Win.Print("手入：进入手入界面")
 end
 
 function 手入.进入手入部屋(self, n)

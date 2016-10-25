@@ -1,6 +1,8 @@
 --[[
-模块化移植：sakura_candy（肝力不足）
-远征_取色：MaSaXX
+刀_模块化脚本
+远征：远征模块的本体
+原作者：MaSaXX
+模块化作者：sakura_candy（肝力不足），黒田くん
 --]]
 
 --刀剑乱舞自动远征脚本
@@ -25,147 +27,131 @@ require("API扩展")
 
 local 通用 = require("通用")
 local 取色 = require("远征_取色")
+local 本丸 = 通用.本丸
+local 出阵 = 通用.出阵
 
 local 远征 = {}
 
-local Num = 0
-
-------------------------------------------------------------------------------------
-
-function 远征.Init()      --初始化函数
-
-    while 取色.SwordList_IsColorAll() == true do
-        Base.ClickRect(859,548,4)  --回本丸
-        Base.Sleep(500)
-     end
-
-    while 取色.Mail_IsColorAll() == true do
-        Base.ClickRect(770,69,10)  --回本丸
-        Base.Sleep(500)
-     end
-
-    Base.ClickRectEx(900,65,50,10)  --初始化回本丸
-    Base.Sleep(1000)  --等待1秒
-
-
-    通用.本丸.回本丸()
-    --成功进入本丸界面
-
-    Win.Print("初始化：处理数据中，请稍候...")
-   -- Win.SetState("初始化完成，等待队伍检测阶段...")
+function 远征.Time_ID(TimeID)
+    if TimeID == 1 then
+        Base.ClickRectEx(200, 190, 35, 20)
+    elseif TimeID == 2 then
+        Base.ClickRectEx(300, 190, 35, 20)
+    elseif TimeID == 3 then
+        Base.ClickRectEx(400, 190, 35, 20)
+    elseif TimeID == 4 then
+        Base.ClickRectEx(500, 190, 35, 20)
+    elseif TimeID == 5 then
+        Base.ClickRectEx(200, 190, 35, 20)
+    end
 end
 
-function 远征.GoToAge()      --不能在选择时代界面调用此函数(待完善
-
-    Base.ClickRectEx(908,111,20,8)  --出阵
-    Base.Sleep(1500)  --等待1秒
-     while 取色.Attack_IsColorAll() == false do
-        Win.Print("错误代码:0x010 未能进入出阵界面，等待2秒重试，若一直提示请游戏+KCA截图")
-        Base.Sleep(2000)
-        Base.ClickRectEx(908,111,20,8)  --重新点击出阵
+function 远征.Point_ID(PointID)
+    if PointID == 1 then
+        Base.ClickRectEx(250, 290, 100, 6)
+    elseif PointID == 2 then
+        Base.ClickRectEx(250, 320, 100, 6)
+    elseif PointID == 3 then
+        Base.ClickRectEx(250, 350, 100, 6)
+    elseif PointID == 4 then
+        Base.ClickRectEx(250, 380, 100, 6)
     end
-    --成功进入出阵界面
+end
 
-    Base.ClickRect(281,406,30)  --远征
-    Base.Sleep(2000)  --等待2秒
-
-    while 取色.ExpChoice_IsColorAll() == false do
-        Win.Print("错误代码:0x004 没有到达远征择界面，等待2秒重试")
-        Base.Sleep(2000)
-    end
-    --成功进入远征界面
+--不能在选择时代界面调用此函数(待完善
+function 远征.GoToAge()
+    出阵.去出阵界面()
+    -- 去远征界面
+    repeat
+        Base.ClickRect(281, 406, 30)
+        Base.Sleep(500, true)
+    until 等待(取色.ExpChoice_IsColorAll)
+    Win.Print("远征：进入远征界面")
 end
 
 function 远征.TeamGo(Team, Map, Point)
-    while 取色.AgeOne_IsColorAll() == false do
-        Win.Print("错误代码:0x005B 没有回到1-4的时代界面，等待3秒重试")
-        Base.Sleep(8000)
-        取色.Time_ID(Point)
-    end
 
+    -- 选择时代和目的地
     取色.Time_ID(Map)
-    Base.Sleep(800)
+    Base.Sleep(500, true)
     取色.Point_ID(Point)
-    Base.Sleep(800)
+    Base.Sleep(500, true)
 
-    if 取色.TeamChoiceGreen_IsColorAll() == false then
-        Win.Print("初始化：检测到" .. Map .. "-" .. Point .. "有旧的远征未完成，跳过")
-        Base.Sleep(1000)
-        return
+    if not 取色.TeamChoiceGreen_IsColorAll() then
+        Win.Print("远征：检测到" .. Map .. "-" .. Point .. "有旧的远征未完成，跳过")
+        Base.Sleep(500, true)
+        return 0
     end
 
-    Base.ClickRectEx(679,523,70,15)  --选择队伍
+    Base.ClickRectEx(679, 523, 70, 15)  --选择队伍
     Base.Sleep(1000)  --等待1秒
 
-    fail_count = 0
-    while 取色.TeamChoice_IsColorAll() == false do
-        Win.Print("没有到达队伍选择界面，等待2秒重试")
+    local fail_count = 0
+    while not 取色.TeamChoice_IsColorAll() do
+        Win.Print("远征：没有到达队伍选择界面，等待2秒重试")
         Base.Sleep(2000)
-        fail_count = fail_count+1
+        fail_count = fail_count + 1
         if fail_count > 2 then
-            Win.Print("失败超过2次，这次就不远征了")
-            Base.ClickRect(636,338)
-            return
+            Win.Print("远征：失败超过2次，这次就不远征了")
+            Base.Sleep(500, true)
+            Base.ClickRect(636, 338)
+            return 0
         end
     end
     --成功进入队伍选择界面
 
     Base.Sleep(500)   --等待0.5秒
     if Team == 4 then
-        Base.ClickRectEx(231,66,10,6)  --点击队伍按钮
+        Base.ClickRectEx(231, 66, 10, 6)  --点击队伍按钮
         Base.Sleep(2000)   --等待2秒
-        Base.ClickRectEx(224,111,8,6)  --选择队伍4
+        Base.ClickRectEx(224, 111, 8, 6)  --选择队伍4
         Base.Sleep(2000)   --等待2秒
     elseif Team == 3 then
-        Base.ClickRectEx(231,66,10,6)  --点击队伍按钮
+        Base.ClickRectEx(231, 66, 10, 6)  --点击队伍按钮
         Base.Sleep(2000)   --等待2秒
-        Base.ClickRectEx(231,93,8,6)  --选择队伍3
+        Base.ClickRectEx(231, 93, 8, 6)  --选择队伍3
         Base.Sleep(2000)   --等待2秒
-    end
-
-    while 取色.TeamChoiceERROR_IsColorAll() == true do
-        Win.Print("目前选择队伍正在远征中，无法选择")
-        Base.Sleep(800)
-        Base.ClickRect(561,499)
-        return
     end
     --成功选择队伍
 
+    if 取色.TeamChoiceERROR_IsColorAll() then
+        Win.Print("远征：目前选择队伍正在远征中，无法选择")
+        Base.Sleep(500, true)
+        Base.ClickRect(561, 499)
+        return 0
+    end
+
     Base.ClickRect(694,500)  --远征开始
     Base.Sleep(7000)   --等待7秒
-    Win.Print("提示：成功开始第"..Team.."队远征")
-    Num = Num + 1
 
+    Win.Print("远征：成功开始第" .. tostring(Team) .. "队远征")
+    return 1
 end
 
 function 远征.执行(self)
+    local 出发队伍数 = 0
     Win.Print("远征：开始执行，设定 = " .. require("inspect")(self.设定))
 
-    远征.Init()
-    Win.Print("初始化：完成，进入下一阶段...")
+    本丸.等待本丸()
     远征.GoToAge()
-    Base.ClickRect(142,187)  --确保在第一页
-        while 取色.AgeOne_IsColorAll() == false do
-            Win.Print("错误代码:0x005 没有到1-4的时代界面，等待2秒重试")
-            Base.Sleep(2000)
-        end
-        Base.Sleep(200)
-        Base.Click(204,188) --点击时代1
-        Base.Sleep(200)
-        --成功进入1-4的时代界面
-        if self.设定.远征队伍时代[1] ~= nil then
-            远征.TeamGo(2, self.设定.远征队伍时代[1][1], self.设定.远征队伍时代[1][2])
-        end
-        if self.设定.远征队伍时代[2] ~= nil then
-            远征.TeamGo(3, self.设定.远征队伍时代[2][1], self.设定.远征队伍时代[2][2])
-        end
-        if self.设定.远征队伍时代[3] ~= nil then
-            远征.TeamGo(4, self.设定.远征队伍时代[3][1], self.设定.远征队伍时代[3][2])
-        end
 
-        通用.本丸.回本丸()
-        Win.Print("远征：任务结束")
-        return Num
+    repeat
+        Base.ClickRect(142, 187) -- 确保在第一页
+        Base.Sleep(500, true)
+        Base.Click(204, 188) -- 点击时代1
+        Base.Sleep(500, true)
+    until 等待(取色.AgeOne_IsColorAll)
+
+    --成功进入1-4的时代界面
+    for i = 1, 3, 1 do
+        if self.设定.远征队伍时代[i] ~= nil then
+            出发队伍数 = 出发队伍数 + 远征.TeamGo(i + 1, self.设定.远征队伍时代[i][1], self.设定.远征队伍时代[i][2])
+        end
+    end
+
+    本丸.回本丸()
+    Win.Print("远征：任务结束，共派出".. tostring(出发队伍数) .. "队刀剑去远征")
+    return 出发队伍数
 end
 
 function 远征:new(设定)
