@@ -33,7 +33,7 @@ function 任务组.开始运行(self)
             end
             --如果任何一个任务出错了就直接返回
             if return_code < 0 then
-                Win.Print("任务组：任务出错，中止运行")
+                Win.Print("任务组：任务出错，中止运行，错误代码"..return_code)
                 return return_code
             end
 

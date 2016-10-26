@@ -59,7 +59,7 @@ function 手入.执行(self)
     local 总治疗刀数 = 0
     Win.Print("手入：开始执行，设定 = " .. require("inspect")(self.设定))
 
-    本丸.等待本丸()
+    本丸.回本丸()
 
     self:进入主界面()
 

@@ -126,7 +126,7 @@ function 补充刀装.执行(self)
     end
     Win.Print("补充刀装：开始执行，设定 = " .. require("inspect")(self.设定))
 
-    本丸.等待本丸()
+    本丸.回本丸()
     结成.去结成界面()
     结成.选择队伍(self.设定.部队号)
 
