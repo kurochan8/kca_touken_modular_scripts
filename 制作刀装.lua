@@ -1,6 +1,5 @@
 --[[
-模块化移植：sakura_candy（肝力不足）
-取色（自动日课脚本）：sieben
+模块制作：sakura_candy（肝力不足）
 配方输入（通用锻刀封装库1.33）: uint 
 --]]
 
@@ -142,6 +141,9 @@ end
 --/**********************/
 function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, makeTen)
     --Assume每次执行都是从一个新的任务开始，配方初始化一次就够了
+
+	
+
     if not Init then
         --检查传入的参数类型
         if (type(charcoal) ~= "number")
@@ -163,11 +165,6 @@ function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, make
             return EQUIP_ERR_INVALID_ARGS_VALUE;
         end
 
-        --检查是否在刀装制作
-        if not 取色.EquipChoice_IsColorAll() then
-            return EQUIP_ERR_NOT_IN_EQUIP_SCREEN;
-        end
-
         --按照数值输入
         制作刀装.EquipMakeInput(0, charcoal);
         制作刀装.EquipMakeInput(1, steel);
@@ -182,13 +179,15 @@ function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, make
     else
         Base.ClickRectEx(639,506)
     end
-    Base.Sleep(800);
+    Base.Sleep(1000);
 
     --弹出对话框，可能是满了什么的
     if 制作刀装.IsMsgbox() then
 		制作刀装.ProcessMsgbox(false);
         return EQUIP_ERR_ABNORMAL_MESSAGE_BOX;
     end
+    
+    取色.等待刀装制作完毕()
     
     if makeTen then
         return EQUIP_TEN_OK
@@ -205,11 +204,8 @@ function 制作刀装.执行(self)
 
     Base.Click(910,232)
 	Base.Sleep(2000)
-	while 取色.EquipChoice_IsColorAll() == false do
-	    	Win.Print("未能成功进入刀装界面，等待3秒重试")
-            Base.Sleep(3000) 
-    end
-    
+    --取色.等待刀装制作画面()
+    等待(取色.EquipChoice_IsColorAll)
     --先试十连,然后一个一个做
     local makeTen = true
     while returncode > 0 do
