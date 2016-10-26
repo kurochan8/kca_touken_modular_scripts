@@ -91,16 +91,18 @@ function 本丸.在刀帐()
 end
 
 function 本丸.回本丸()
-    repeat
-        if 本丸.在信箱() then
-            Base.ClickRect(770, 69, 10)
-        elseif 本丸.在刀帐() then
-            Base.ClickRect(859, 548, 4)
-        else
-            Base.ClickRectEx(900, 65, 50, 10)
-        end
-        Base.Sleep(500, true)
-    until 等待(本丸.在本丸)
+    if not 本丸.在本丸() then
+        repeat
+            if 本丸.在信箱() then
+                Base.ClickRect(770, 69, 10)
+            elseif 本丸.在刀帐() then
+                Base.ClickRect(859, 548, 4)
+            else
+                Base.ClickRectEx(900, 65, 50, 10)
+            end
+            Base.Sleep(500, true)
+        until 等待(本丸.在本丸)
+    end
     Win.Print("通用：返回本丸")
 end
 
