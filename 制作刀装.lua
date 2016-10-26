@@ -200,6 +200,7 @@ function 制作刀装.执行(self)
     通用.本丸.回本丸()
     local returncode = 1
     local Num = 0
+    Init = false
     Win.Print("制作刀装：开始执行，设定 = " .. require("inspect")(self.设定))
 
     Base.Click(910,232)
