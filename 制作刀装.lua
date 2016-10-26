@@ -34,7 +34,7 @@ local Init = false
 --/**********************/
 function 制作刀装.ProcessMsgbox(option)
     --操作计数器
-    time = 0
+    local time = 0
 
     --并没有对话框，立即返回
     if not 制作刀装.IsMsgbox() then
@@ -44,14 +44,14 @@ function 制作刀装.ProcessMsgbox(option)
     --循环点击直到对话框消失，限时60s（每500ms计数器加一）
     while 制作刀装.IsMsgbox() and time < 120 do
         --是否有"否"按钮
-        if Base.ImageHashContrast(Base.ImageHash(536,324,80,30),"FFFFFB7F7B4B0100") < 10 then
+        if Base.ImageHashContrast(Base.ImageHash(536, 324, 80, 30), "FFFFFB7F7B4B0100") < 10 then
                 if option then
-                    Base.ClickRect(386,338)
+                    Base.ClickRect(386, 338)
                 else
-                    Base.ClickRect(571,338)
+                    Base.ClickRect(571, 338)
                 end
         else
-            Base.ClickRect(486,338)
+            Base.ClickRect(486, 338)
         end
         Base.Sleep(500)
         time = time + 1
@@ -71,7 +71,7 @@ end
 --/*  弹出              */
 --/**********************/
 function 制作刀装.IsMsgbox()
-    return (Base.ImageHashContrast(Base.ImageHash(252,153,100,50),"007F7F7F7E7F7F7F") < 10)
+    return (Base.ImageHashContrast(Base.ImageHash(252, 153, 100, 50), "007F7F7F7E7F7F7F") < 10)
 end
 
 --/**********************/
@@ -84,26 +84,26 @@ end
 --/**********************/
 function 制作刀装.EquipMakeInput(operationIndex, materialValue)
     --按钮间距(Y轴)
-    buttonsSpacing = 96
+    local buttonsSpacing = 96
     --百位十位增加按钮X坐标
-    hundredsAndTensAddButtonXPos = 719
+    local hundredsAndTensAddButtonXPos = 719
     --百位十位减少按钮X坐标
-    hundredsAndTensSubButtonXPos = 648
+    local hundredsAndTensSubButtonXPos = 648
     --个位增加按钮X坐标
-    unitsAddButtonXPos = 582
+    local unitsAddButtonXPos = 582
     --百位按钮基础Y坐标
-    hundredsButtonYPosBase = 132
+    local hundredsButtonYPosBase = 132
     --十位按钮基础Y坐标
-    tensButtonYPosBase = 108
+    local tensButtonYPosBase = 108
     --个位增加按钮基础Y坐标
-    unitsAddButtonYPosBase = 111
+    local unitsAddButtonYPosBase = 111
     --单击区域偏移像素个数
-    rectPixels = 2
+    local rectPixels = 2
 
     --拆分数字
-    hundredsDigit = math.floor(materialValue / 100 % 10)
-    tensDigit = math.floor(materialValue / 10 % 10)
-    unitsDigit = math.floor(materialValue % 10)
+    local hundredsDigit = math.floor(materialValue / 100 % 10)
+    local tensDigit = math.floor(materialValue / 10 % 10)
+    local unitsDigit = math.floor(materialValue % 10)
 
     --输入百位
     for i = 1, hundredsDigit do
@@ -142,8 +142,6 @@ end
 function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, makeTen)
     --Assume每次执行都是从一个新的任务开始，配方初始化一次就够了
 
-
-
     if not Init then
         --检查传入的参数类型
         if (type(charcoal) ~= "number")
@@ -175,9 +173,9 @@ function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, make
 
     --点按刀装制作开始
     if makeTen then
-        Base.ClickRectEx(440,507)
+        Base.ClickRectEx(440, 507)
     else
-        Base.ClickRectEx(639,506)
+        Base.ClickRectEx(639, 506)
     end
     Base.Sleep(1000)
 
@@ -202,7 +200,7 @@ function 制作刀装.执行(self)
     Init = false
     Win.Print("制作刀装：开始执行，设定 = " .. require("inspect")(self.设定))
 
-    Base.Click(910,232)
+    Base.Click(910, 232)
 	Base.Sleep(2000)
     --取色.等待刀装制作画面()
     等待(取色.EquipChoice_IsColorAll)
@@ -220,7 +218,7 @@ function 制作刀装.执行(self)
             returncode = 1
         end
     end
-    Win.Print("制作刀装"..Num.."个")
+    Win.Print("制作刀装" .. tostring(Num) .. "个")
     通用.本丸.回本丸()
     return Num
 end
