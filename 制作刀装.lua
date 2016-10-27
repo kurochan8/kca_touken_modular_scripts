@@ -199,11 +199,13 @@ function 制作刀装.执行(self)
     local Num = 0
     Init = false
     Win.Print("制作刀装：开始执行，设定 = " .. require("inspect")(self.设定))
-
-    Base.Click(910, 232)
-	Base.Sleep(2000)
+   
     --取色.等待刀装制作画面()
-    等待(取色.EquipChoice_IsColorAll)
+    while not 取色.刀装作成画面() do
+        Base.Click(910, 232)
+        Base.Sleep(2000)
+    end
+    Win.Print("制作刀装：进入界面")
     --先试十连,然后一个一个做
     local makeTen = true
     while returncode > 0 do
@@ -218,7 +220,7 @@ function 制作刀装.执行(self)
             returncode = 1
         end
     end
-    Win.Print("制作刀装" .. tostring(Num) .. "个")
+    Win.Print("制作刀装：共" .. tostring(Num) .. "个")
     通用.本丸.回本丸()
     return Num
 end

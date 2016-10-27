@@ -6,8 +6,8 @@ require("API扩展")
 
 local 取色 = {}
 
-function 取色.EquipChoice_IsColorAll()
-    return Base.IsColor(908, 232, 7747608)
+function 取色.刀装作成画面()
+	return Base.ImageHashContrast(Base.ImageHash(337,57,200,20),"003C763F3B7F6E00") < 10
 end
 
 function 取色.EquipMakeTenFinished()
@@ -33,7 +33,6 @@ end
 
 function 取色.等待刀装制作完毕()
     while not 取色.EquipMakeTenFinished() and not 取色.EquipMakeOneFinished() do
-		Base.Print("等待刀装制作完毕")
 		Base.Sleep(1000)
 	end
     Base.ClickRectEx(342, 384, 100, 100)
