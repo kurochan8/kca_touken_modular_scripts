@@ -7,18 +7,18 @@ require("API扩展")
 local 取色 = {}
 
 function 取色.刀装作成画面()
-	return Base.ImageHashContrast(Base.ImageHash(337,57,200,20),"003C763F3B7F6E00") < 10
+    return Base.ImageHashContrast(Base.ImageHash(337,57,200,20),"003C763F3B7F6E00") < 10
 end
 
 function 取色.EquipMakeTenFinished()
-    return Base.IsColorAll(
-                {{289,275,2381689},
-                {188,275,1387120},
-                {387,279,1386602},
-                {292,127,4081447},
-                {272,388,2452862},
-                {396,426,1789557}}
-                )
+    return Base.IsColorAll({
+        {289, 275, 2381689},
+        {188, 275, 1387120},
+        {387, 279, 1386602},
+        {292, 127, 4081447},
+        {272, 388, 2452862},
+        {396, 426, 1789557},
+    })
 end
 
 function 取色.EquipMakeOneFinished()
@@ -33,8 +33,8 @@ end
 
 function 取色.等待刀装制作完毕()
     while not 取色.EquipMakeTenFinished() and not 取色.EquipMakeOneFinished() do
-		Base.Sleep(1000)
-	end
+        Base.Sleep(1000)
+    end
     Base.ClickRectEx(342, 384, 100, 100)
 end
 

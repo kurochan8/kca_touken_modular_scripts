@@ -181,7 +181,7 @@ function 制作刀装.EquipMakeWithRecipe(charcoal, steel, coolant, grindstone, make
 
     --弹出对话框，可能是满了什么的
     if 制作刀装.IsMsgbox() then
-		制作刀装.ProcessMsgbox(false)
+        制作刀装.ProcessMsgbox(false)
         return EQUIP_ERR_ABNORMAL_MESSAGE_BOX
     end
 
@@ -199,7 +199,7 @@ function 制作刀装.执行(self)
     local Num = 0
     Init = false
     Win.Print("制作刀装：开始执行，设定 = " .. require("inspect")(self.设定))
-   
+
     --取色.等待刀装制作画面()
     while not 取色.刀装作成画面() do
         Base.Click(910, 232)
