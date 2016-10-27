@@ -43,7 +43,7 @@ function 出阵.执行(self)
         -- 做思考状_(:3」∠)_
         Base.Sleep(1000, true)
         for i, v in ipairs(刀血量) do
-            if v <= 常量.受伤百分比.重伤 then
+            if v > 0 and v <= 常量.受伤百分比.重伤 then
                 Win.Print("出阵：队伍内有重伤员，中断脚本")
                 return -1
             end
