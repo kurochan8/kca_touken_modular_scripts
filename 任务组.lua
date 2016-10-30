@@ -22,7 +22,7 @@ function 任务组.开始运行(self)
         Win.Print("任务组：开始执行第" .. tostring(i) .. "次循环")
 
         for j = 1, #self.任务序列, 1 do
-            if math.fmod(i,self.execute_every_x_cycle[j]) == 0 then
+            if self.execute_every_x_cycle[j] > 0 and i % self.execute_every_x_cycle[j] == 0 then
                 if type(self.任务序列[j]) == "function" then
                     return_code = self.任务序列[j]()
                 elseif self.任务序列[j]["执行"] and type(self.任务序列[j]["执行"]) == "function" then
